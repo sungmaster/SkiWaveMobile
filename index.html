@@ -1,0 +1,38 @@
+<!doctype html> 
+<html lang="en"> 
+<head> 
+	<meta charset="UTF-8" />
+	<title>SkiWave</title>
+	<script type="text/javascript" src="./js/phaser.min.js"></script>
+	<style type="text/css">
+		body {
+			margin: 0;
+			width: 100%;
+			height: 100%;
+			background-color: black;
+		}
+	</style>
+	<link rel="stylesheet" href="./fonts/mariofont/stylesheet.css" type="text/css" charset="utf-8" />
+	<script>
+		window.fbAsyncInit = function() {
+			FB.init({
+				appId      : '341623679570259',
+				xfbml      : true,
+				version    : 'v2.8'
+			});
+			FB.AppEvents.logPageView();
+		};
+
+		(function(d, s, id){
+			 var js, fjs = d.getElementsByTagName(s)[0];
+			 if (d.getElementById(id)) {return;}
+			 js = d.createElement(s); js.id = id;
+			 js.src = "//connect.facebook.net/en_US/sdk.js";
+			 fjs.parentNode.insertBefore(js, fjs);
+		 }(document, 'script', 'facebook-jssdk'));
+	</script>
+	<script type="text/javascript" src="./js/game.js">	</script>
+</head>
+<body>
+</body>
+</html>
