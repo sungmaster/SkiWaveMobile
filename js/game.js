@@ -16,6 +16,18 @@ function main() {
 	var h = 910;
 	var game = new Phaser.Game(w, h, Phaser.AUTO, 'ShiWave', { preload: startPreload, create: startCreate, update: startUpdate, render: render });
 
+	var fbService, socialAPI;
+
+		fbService = Cocoon.Social.Facebook;
+            fbService.init({
+               appId      : "341623679570259",
+               xfbml      : true,
+               version    : 'v2.8'
+
+            }, function () {
+                socialAPI = fbService.getSocialInterface(); //high level abstraction API
+            });
+
 	window.onresize = function(event) {
 		console.log(screen.height, window.innerHeight);
 		if ( (screen.availHeight || screen.height-30) <= window.innerHeight) {
@@ -694,25 +706,35 @@ function main() {
 
 	function tweetscore(){        //share score on twitter        
 		var tweetbegin = 'http://twitter.com/home?status=';
-		var tweettxt = 'I have '+score+' points in SkiWave. I dare you to score more! Try now: ' + 'https://klerkoshel.itch.io/skiwave-a-day-on-the-melting-pole' + '.';
+		var tweettxt = 'I have '+score+' points in SkiWave. I dare you to score more! Try now: ' + 'https://play.google.com/store/apps/details?id=com.klerkoshel.c1485357946674' + '.';
 		var finaltweet = tweetbegin +encodeURIComponent(tweettxt);
 		window.open(finaltweet,'_blank');
 	}
 	function vkscore(){        //share score on twitter        
 		var url  = 'http://vk.com/share.php?';
-		url += 'url='          + encodeURIComponent('https://klerkoshel.itch.io/skiwave-a-day-on-the-melting-pole');
+		url += 'url='          + encodeURIComponent('https://play.google.com/store/apps/details?id=com.klerkoshel.c1485357946674');
 		url += '&title='       + encodeURIComponent('I have '+score+' points in SkiWave');
 		url += '&description=' + encodeURIComponent('I have '+score+' points in SkiWave. I dare you to score more!');
 		url += '&noparse=true';
 		window.open(url,'','menubar=no,toolbar=0,status=0,width=786,height=436');
 	}
-	function fbscore(){        //share score on twitter        
-		FB.ui({ method: 'feed',
-			link: 'https://klerkoshel.itch.io/skiwave-a-day-on-the-melting-pole',
-			name: 'I have '+score+' points in SkiWave. I dare you to score more! Try now:',
-			description: 'SkiWave: A Day On The Melting Pole',
-			display: 'popup'
-		}, function (response){});  
+	function fbscore(){
+
+		// var message = new Cocoon.Social.Message(
+  //               'I have '+score+' points in SkiWave. I dare you to score more! Try now: ' + 'https://klerkoshel.itch.io/skiwave-a-day-on-the-melting-pole' + '.'
+  //               );
+  var message = { 
+name: "Ludei & CocoonJS", 
+description: 'I have '+score+' points in SkiWave. I dare you to score more! Try now!', 
+picture: "https://pp.vk.me/c836638/v836638874/203ed/EYQrRkwVIt0.jpg", 
+link: "https://play.google.com/store/apps/details?id=com.klerkoshel.c1485357946674", 
+caption: "Play now!"}; 
+
+            fbService.showShareDialog(message, function(error) {
+                if (error) {
+                    console.error("Error publishing message: " + error.message);
+                }
+            });
 	}
 }
 
