@@ -12,8 +12,8 @@ function main() {
 	var innerWidth = window.innerWidth;
 	var innerHeight = window.innerHeight;
 	var gameRatio = innerWidth/innerHeight;
-	var w = Math.floor(910*gameRatio);
-	var h = 910;
+	var w = Math.floor(980*gameRatio);
+	var h = 980;
 	var game = new Phaser.Game(w, h, Phaser.AUTO, 'ShiWave', { preload: startPreload, create: startCreate, update: startUpdate, render: render });
 
 	var fbService, socialAPI;
