@@ -563,7 +563,7 @@ function main() {
 		var gameLabel = game.add.text(w / 2, 200, 'SkiWave', {font: '164px super_mario_256regular', fill: '#fff800'});
 		gameLabel.anchor.setTo(0.5, 0.5);
 
-		var playLabel = game.add.text(w / 2, h / 2 , "click here or press\nspaceBar to start", {font: '54px super_mario_256regular', fill: '#FFB200', align: 'center'});
+		var playLabel = game.add.text(w / 2, h / 2 , "TAP HERE TO START", {font: '54px super_mario_256regular', fill: '#FFB200', align: 'center'});
 		playLabel.inputEnabled = true;
 		playLabel.events.onInputDown.add(function(){game.state.start('main');});
 		playLabel.anchor.setTo(0.5, 0.5);
@@ -619,7 +619,7 @@ function main() {
 		var loseScoreLabel = game.add.text(w / 2, 150, "your score : "+score, {font: '54px super_mario_256regular', fill: '#fff800'});
 		loseScoreLabel.anchor.setTo(0.5, 0.5);
 
-		var playLabel = game.add.text(w / 2, h - 150, "click here or press spaceBar", {font: '54px super_mario_256regular', fill: '#fff800'});
+		var playLabel = game.add.text(w / 2, h - 150, "TAP HERE TO RESTART", {font: '54px super_mario_256regular', fill: '#fff800'});
 		playLabel.inputEnabled = true;
 		playLabel.events.onInputDown.add(loseNavigate);
 		playLabel.anchor.setTo(0.5, 0.5);
