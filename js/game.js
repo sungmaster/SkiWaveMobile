@@ -19,16 +19,16 @@ function main() {
 	var fbService, socialAPI;
 
 		fbService = Cocoon.Social.Facebook;
-            fbService.init({
-               appId      : "341623679570259",
-               xfbml      : true,
-               version    : 'v2.8'
+			fbService.init({
+			   appId      : "341623679570259",
+			   xfbml      : true,
+			   version    : 'v2.8'
 
-            }, function () {
-                socialAPI = fbService.getSocialInterface(); //high level abstraction API
-            });
+			}, function () {
+				socialAPI = fbService.getSocialInterface(); //high level abstraction API
+			});
 
-	window.onresize = function(event) {
+	/*window.onresize = function(event) {
 		console.log(screen.height, window.innerHeight);
 		if ( (screen.availHeight || screen.height-30) <= window.innerHeight) {
 			console.log('full');
@@ -36,7 +36,7 @@ function main() {
 		else {
 			console.log('not');
 		}
-	};
+	};*/
 
 	function preload() {
 		game.scale.scaleMode = Phaser.ScaleManager.EXACT_FIT;
@@ -300,7 +300,7 @@ function main() {
 		game.input.onUp.add(onUnTap, this);
 
 		bonus.length = 0;
-		for(var i=0; i<5; i++){
+		for(var i=0; i<15; i++){
 			bonus.push(game.add.sprite(1000+Math.ceil(Math.random()*33000), 20, 'bonus'));
 			game.physics.p2.enable(bonus[i]);
 			bonus[i].body.collideWorldBounds = true;
@@ -320,7 +320,7 @@ function main() {
 		if (player.body.velocity.x > 1800){player.body.velocity.x = 1800;}
 
 		if (Math.abs(player.body.velocity.x)>20){
-			score += (player.body.x - startTime)/500; scoreLabel.setText(Math.ceil(score)); 
+			score += (player.body.x - startTime)/10000; scoreLabel.setText(Math.ceil(score)); 
 		}
 		startTime = player.body.x;
 		wave.body.force.x = waveSpeed;
@@ -420,7 +420,7 @@ function main() {
 				onGround = true; 
 				inTerrain++;
 				if (jumpTime!=0){
-					score += (player.body.x - jumpTime)/25;
+					score += (player.body.x - jumpTime)/750;
 					jumpTime = 0;
 					scoreLabel.setText(Math.ceil(score));
 					jumpTimer = 0;
@@ -706,35 +706,31 @@ function main() {
 
 	function tweetscore(){        //share score on twitter        
 		var tweetbegin = 'http://twitter.com/home?status=';
-		var tweettxt = 'I have '+score+' points in SkiWave. I dare you to score more! Try now: ' + 'https://play.google.com/store/apps/details?id=com.klerkoshel.c1485357946674' + '.';
+		var tweettxt = 'I have '+score+' points in #SkiWave. I dare you to score more! Try now: ' + 'https://play.google.com/store/apps/details?id=com.klerkoshel.c1485357946674' + '.';
 		var finaltweet = tweetbegin +encodeURIComponent(tweettxt);
 		window.open(finaltweet,'_blank');
 	}
 	function vkscore(){        //share score on twitter        
 		var url  = 'http://vk.com/share.php?';
 		url += 'url='          + encodeURIComponent('https://play.google.com/store/apps/details?id=com.klerkoshel.c1485357946674');
-		url += '&title='       + encodeURIComponent('I have '+score+' points in SkiWave');
-		url += '&description=' + encodeURIComponent('I have '+score+' points in SkiWave. I dare you to score more!');
+		url += '&title='       + encodeURIComponent('I have '+score+' points in #SkiWave');
+		url += '&description=' + encodeURIComponent('I have '+score+' points in #SkiWave. I dare you to score more!');
 		url += '&noparse=true';
 		window.open(url,'','menubar=no,toolbar=0,status=0,width=786,height=436');
 	}
 	function fbscore(){
+		var message = { 
+			name: "SkiWave", 
+			description: 'I have '+score+' points in #SkiWave. I dare you to score more! Try now!', 
+			picture: "https://pp.vk.me/c836638/v836638874/203ed/EYQrRkwVIt0.jpg", 
+			link: "https://play.google.com/store/apps/details?id=com.klerkoshel.c1485357946674", 
+			caption: "Play now!"}; 
 
-		// var message = new Cocoon.Social.Message(
-  //               'I have '+score+' points in SkiWave. I dare you to score more! Try now: ' + 'https://klerkoshel.itch.io/skiwave-a-day-on-the-melting-pole' + '.'
-  //               );
-  var message = { 
-name: "Ludei & CocoonJS", 
-description: 'I have '+score+' points in SkiWave. I dare you to score more! Try now!', 
-picture: "https://pp.vk.me/c836638/v836638874/203ed/EYQrRkwVIt0.jpg", 
-link: "https://play.google.com/store/apps/details?id=com.klerkoshel.c1485357946674", 
-caption: "Play now!"}; 
-
-            fbService.showShareDialog(message, function(error) {
-                if (error) {
-                    console.error("Error publishing message: " + error.message);
-                }
-            });
+			fbService.showShareDialog(message, function(error) {
+				if (error) {
+					console.error("Error publishing message: " + error.message);
+				}
+			});
 	}
 }
 
